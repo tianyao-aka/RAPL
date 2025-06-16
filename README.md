@@ -19,7 +19,19 @@ This will use LLM to identify rational paths in the training set.
 ```
 CUDA_VISIBLE_DEVICES=0 python RelationPathTargeting.py --train_path xxx  --out_dir xxx
 ```
-This will identify the possible relation set for each sample. Specify `train_path` obtained the previous stage to load pickle file (e.g., `data_files/webqsp/train_res_topic_relations.pkl`). Then specify `out_dir` (e.g., `data_files/webqsp/topic_relation_candidates/`) for saving the pickle file for the relation set. Finally, make the PyG dataset:
+This will identify the possible relation set for each sample. Specify `train_path` obtained the previous stage to load pickle file (e.g., `data_files/webqsp/train_res_topic_relations.pkl`). Then specify `out_dir` (e.g., `data_files/webqsp/topic_relation_candidates/`) for saving the pickle file for the relation set. 
+
+Before processing the PyG dataset, make sure `data/$dataset$/raw` is organized as following:
+
+```
+- raw
+  - annotated_path_GPT4o
+  - gte-large-en-v1.5
+  - processed
+```
+All the pickle files should be inside `processed/`. 
+
+Finally, make the PyG dataset:
 ```
 CUDA_VISIBLE_DEVICES=0 python load_post_processed_dataset.py --name webqsp
 ```
@@ -29,7 +41,7 @@ CUDA_VISIBLE_DEVICES=0 python load_post_processed_dataset_test.py --name webqsp
 ```
 This does not require rational path and relation labelling.
 
-Now we have a PyG dataset, and we can directly apply GNN model on it.
+Now we have a PyG dataset, and we can directly apply a GNN model on it. 
 
 ## Train retriever
 
