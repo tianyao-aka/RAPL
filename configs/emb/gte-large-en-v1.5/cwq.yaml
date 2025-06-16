@@ -1,0 +1,10 @@
+task: 'emb'
+
+env:
+  num_threads: 16
+  seed: 42
+
+entity_identifier_file: 'data_files/cwq/entity_identifiers.txt'
+
+text_encoder:
+  name: 'gte-large-en-v1.5'
