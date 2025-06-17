@@ -398,8 +398,8 @@ class Trainer(nn.Module):
 
     def fit(
         self,
-        dataloader1,
-        val_dataloader1=None,
+        dataloader,
+        val_dataloader=None,
         save_dir=None,
         pathtrainingstart: bool = True,
     ):
@@ -417,9 +417,9 @@ class Trainer(nn.Module):
 
         Args
         ----
-        dataloader1 : torch.utils.data.DataLoader
+        dataloader : torch.utils.data.DataLoader
             Training dataloader.
-        val_dataloader1 : torch.utils.data.DataLoader, optional
+        val_dataloader : torch.utils.data.DataLoader, optional
             Validation dataloader.
         save_dir : str, optional
             Directory for logs and checkpoints.  Created if it does not exist.
@@ -462,7 +462,7 @@ class Trainer(nn.Module):
             ################################################
             # ----------  Training loop  -------------------
             ################################################
-            for batch_idx, batch in enumerate(dataloader1):
+            for batch_idx, batch in enumerate(dataloader):
                 try:
                     loss, topic_loss, path_loss = self.train_step(
                         batch, scaler, pathtrainingstart
@@ -514,9 +514,9 @@ class Trainer(nn.Module):
             ################################################
             # ----------  Validation (optional) ------------
             ################################################
-            if val_dataloader1 is not None and epoch > 5:
+            if val_dataloader is not None and epoch > 5:
                 val_topic, val_path, prec, rec = self.evaluate(
-                    val_dataloader1,
+                    val_dataloader,
                     eval_loss=True,
                     eval_pr=pathtrainingstart,
                     is_valid_or_test=True,
